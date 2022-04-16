@@ -1,0 +1,63 @@
+*{
+    font-family: cursive;
+}
+
+h1{
+    color: crimson;
+    background-color: white;
+}
+
+body
+{
+    background-color: aqua;
+}
+
+.btn-warning{
+    float: right;
+    margin-top: 3.5px;
+    margin-right: 10px;
+}
+
+#label,#accu{
+    font-size: 25px;
+}
+
+.btn-danger{
+    font-size: 25px;
+}
+
+canvas{
+    border: 5px solid white;
+    border-radius: 20px;
+    animation-name: keerat;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    margin-top: 130px;
+}
+
+@keyframes keerat {
+    from{
+        box-shadow: 1px 1px 40px blue;
+    }
+
+    to{
+        box-shadow: 1px 1px 40px white;
+    }
+}
+
+#score{
+    font-size: 25px;
+    float: left;
+    margin-left: 150px;
+}
+
+#timer{
+    font-size: 25px;
+    float: right;
+    margin-right: 150px;
+}
+
+#what{
+    color: red;
+    font-size: 30px;
+}
