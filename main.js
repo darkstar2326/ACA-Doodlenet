@@ -1,43 +1,3 @@
-function setup() {
-    canvas = createCanvas(300, 300);
-    canvas.center();
-    background("white");
-    canvas.mouseReleased(classifycanvas);
-    classifier = ml5.imageClassifier("DoodleNet");
-    api = window.speechSynthesis;
-}
-
-function draw() {
-    strokeWeight(13);
-    stroke(0);
-    if (mouseIsPressed) {
-        line(pmouseX, pmouseY, mouseX, mouseY);
-    }
-    check_draw();
-}
-
-function classifycanvas() {
-    classifier.classify(canvas, gotResult);
-}
-
-function gotResult(error, result) {
-    if (error) {
-        console.error(error);
-    }
-    else {
-        console.log(result);
-        sketch = result[0].label;
-        document.getElementById("label").innerHTML = "Label:" + " " + result[0].label;
-        document.getElementById("accu").innerHTML = "Accuracy: " + Math.round(result[0].confidence * 100) + "%";
-        utterthis = new SpeechSynthesisUtterance(result[0].label);
-        api.speak(utterthis);
-    }
-}
-
-function clearistic() {
-    background("white");
-}
-
 quick_draw_data_set = ["aircraft carrier", "airplane", "alarm clock", "ambulance", "angel",
     "animal migration", "ant", "anvil", "apple", "arm", "asparagus", "axe", "backpack", "banana",
     "bandage", "barn", "baseball", "baseball bat", "basket", "basketball", "bat", "bathtub", "beach",
@@ -89,13 +49,80 @@ quick_draw_data_set = ["aircraft carrier", "airplane", "alarm clock", "ambulance
     "watermelon", "waterslide", "whale", "wheel", "windmill", "wine bottle",
     "wine glass", "wristwatch", "yoga", "zebra", "zigzag"];
 
+
+
+
+
+
+
+
+
+
+var random = Math.round(Math.random() * quick_draw_data_set.length);
+console.log(random);
+console.log(quick_draw_data_set[random]);
+drawn_sketch = quick_draw_data_set[random];
+document.getElementById("what").innerHTML = "Sketch to be Drawn: " + drawn_sketch
+
+
+
+
+function setup() {
+    canvas = createCanvas(300, 300);
+    canvas.center();
+    background("white");
+    canvas.mouseReleased(classifycanvas);
+    classifier = ml5.imageClassifier("DoodleNet");
+    api = window.speechSynthesis;
+}
+
+function draw() {
+    strokeWeight(13);
+    stroke(0);
+    if (mouseIsPressed) {
+        line(pmouseX, pmouseY, mouseX, mouseY);
+    }
+    check_draw();
+    if(sketch == drawn_sketch && sketch.length>0){
+        answer_holder = "set";
+        score++;
+        sketch = "";
+        document.getElementById("score").innerHTML = "Score: " + score;
+    }
+ 
+}
+
+function classifycanvas() {
+    classifier.classify(canvas, gotResult);
+}
+
+function gotResult(error, result) {
+    if (error) {
+        console.error(error);
+    }
+    else {
+        console.log(result);
+        sketch = result[0].label;
+        document.getElementById("label").innerHTML = "Label:" + " " + result[0].label;
+        document.getElementById("accu").innerHTML = "Accuracy: " + Math.round(result[0].confidence * 100) + "%";
+        utterthis = new SpeechSynthesisUtterance(result[0].label);
+        api.speak(utterthis);
+    }
+}
+
+function clearistic() {
+    background("white");
+}
+
+
 function update_canvas()
 {background("white");
 var random = Math.round(Math.random() * quick_draw_data_set.length);
 console.log(random);
 console.log(quick_draw_data_set[random]);
 drawn_sketch = quick_draw_data_set[random];
-document.getElementById("what").innerHTML = "Sketch to be Drawn: " + (quick_draw_data_set[random]).toUpperCase();}
+document.getElementById("what").innerHTML = "Sketch to be Drawn: " + drawn_sketch
+}
 
 var timer_counter = 0;
 var timer_check = "";
@@ -105,11 +132,7 @@ var score = 0;
 var sketch = "";
 var drawn_sketch = "";
 
-if(sketch == drawn_sketch){
-    answer_holder = "set";
-    score++;
-    document.getElementById("score").innerHTML = "Score: " + score;
-}
+
 
 function check_draw(){
     timer_counter++;
@@ -125,3 +148,4 @@ function check_draw(){
         update_canvas();
     }
 }
+
